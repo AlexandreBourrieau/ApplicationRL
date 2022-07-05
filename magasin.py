@@ -10,6 +10,7 @@ class Magasin:
         self.image_magasin = None                   # Image au format CV2 du magasin
         self.image_magasin_objectif = None          # Image au format CV2 du magasin avec l'objectif entouré
         self.image_magasin_trajectoire = None       # Image au format CV2 du magasin avec la trajectoire
+        self.image_magasin_trajectoire_temp = None
         self.image_Vtable = None                    # Image au format CV2 du magasin avec color-map des valeurs d'états
         self.valeursColorMap = None
         self._res = 0.05                            # Résolution de l'image du magasin (5cm/pixel)
@@ -54,6 +55,7 @@ class Magasin:
 
     def InitImageTrajectoire(self):
         self.image_magasin_trajectoire = self.image_magasin_objectif.copy()
+        self.image_magasin_trajectoire_temp = self.image_magasin_objectif.copy()
 
     # Fonction permettant d'afficher la cible sur l'image du magasin
     def AfficheObjectifSurImage(self):
@@ -100,5 +102,5 @@ class Magasin:
         etat_suivant = np.random.choice(etats_suivants,1,p=probas).item()
 
         # Affiche la trajectoire sur l'image
-        self.image_magasin_trajectoire = AfficheTrajectoireSurImage(self.triangles, self.image_magasin_trajectoire, self._res, etat, etat_suivant)
+        self.image_magasin_trajectoire, self.image_magasin_trajectoire_temp = AfficheTrajectoireSurImage(self.triangles, self.image_magasin_trajectoire_temp, self._res, etat, etat_suivant)
         return etat_suivant, self.image_magasin_trajectoire
