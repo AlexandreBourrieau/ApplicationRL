@@ -4,7 +4,9 @@ import pandas as pd
 import cv2
 
 class Magasin:
-    def __init__(self):
+    def __init__(self,fichier_maillage,fichier_image):
+        self.fichier_maillage = fichier_maillage
+        self.fichier_image = fichier_image
         self.image_magasin = None                   # Image au format CV2 du magasin
         self.image_magasin_objectif = None          # Image au format CV2 du magasin avec l'objectif entouré
         self.image_magasin_trajectoire = None       # Image au format CV2 du magasin avec la trajectoire
@@ -28,11 +30,11 @@ class Magasin:
         # triangles :   (nombre_triangles,[noeud1,noeud2,noeud3n,centre],coordonnées_XYZ)
         # noeuds :      (nombre_triangles,3)
         print("Initialisation de la carte ...")
-        self.triangles, self.noeuds = CreationCarteDesEtats("maillage_carte.msh")
+        self.triangles, self.noeuds = CreationCarteDesEtats(self.fichier_maillage)
         self.nombre_etats = self.triangles.shape[0]
 
         # Création de l'image du magasin avec les triangles et les centres
-        self.image_magasin = CreationImageMagasin("image_magasin.png",self.triangles,self._res)
+        self.image_magasin = CreationImageMagasin(self.fichier_image,self.triangles,self._res)
 
         # Construction de la table des probabilités de transition et des récompenses
         print("Construction de la table des transitions ...")
