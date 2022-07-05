@@ -356,6 +356,7 @@ def CreationColorMapVtable(image, triangles, resolution, Vtable, EtatCible):
 #############################################################
 def AfficheTrajectoireSurImage(triangles, image, res, etat_courant, etat_suivant):
     img = image.copy()
+
     pos_ETAT_COURANT = triangles[etat_courant,3,:]
     pos_ETAT_SUIVANT = triangles[etat_suivant,3,:]
 
@@ -367,8 +368,11 @@ def AfficheTrajectoireSurImage(triangles, image, res, etat_courant, etat_suivant
     centerX = int(triangles[etat_suivant,3,0]/(1000*res))
     centerY = int(triangles[etat_suivant,3,1]/(1000*res))
     img = cv2.line(img, (x1,img.shape[0]-y1),(x2,img.shape[0]-y2), color=(0x1C,0x8E,0x00), thickness=2)
+    img_temp = img.copy()
 
-    return img
+    img = cv2.circle(img, (centerX,img.shape[0]-centerY), radius=2, color=(255,0,0), thickness=2)
+
+    return img, img_temp
 
 
 #############################################################
